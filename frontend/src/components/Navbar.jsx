@@ -12,28 +12,28 @@ const Navbar = () => {
       <ul className="hidden sm:flex gap-5 text-sm text-gray-900">
         <NavLink
           to="/"
-          className="py-2 pl-6 border flex flex-col items-center gap-1"
+          className="py-2 pl-6 border-0 flex flex-col items-center gap-1"
         >
           <p>HOME</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink
           to="/collection"
-          className="py-2 pl-6 border flex flex-col items-center gap-1"
+          className="py-2 pl-6 border-0 flex flex-col items-center gap-1"
         >
           <p>COLLECTION</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink
           to="/about"
-          className="py-2 pl-6 border flex flex-col items-center gap-1"
+          className="py-2 pl-6 border-0 flex flex-col items-center gap-1"
         >
           <p>ABOUT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink
           to="/contact"
-          className="py-2 pl-6 border flex flex-col items-center gap-1"
+          className="py-2 pl-6 border-0 flex flex-col items-center gap-1"
         >
           <p>CONTACT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
@@ -62,7 +62,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <Link to="/cart" className="relative py-2 pl-6 border">
+        <Link to="/cart" className="relative">
           <img src={assets.cart_icon} className="w-5 min-w-5" alt="cart_icon" />
           <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             10
@@ -84,10 +84,10 @@ const Navbar = () => {
             <img className="h-4 rotate-180" src={assets.dropdown_icon} alt="drop_down_icon" />
             <p>Back</p>
           </div>
-          <NavLink className="py-2 pl-6 border" to="/">HOME</NavLink>
-          <NavLink className="py-2 pl-6 border" to="/collection">COLLECTION</NavLink>
-          <NavLink className="py-2 pl-6 border" to="/about">ABOUT</NavLink>
-          <NavLink className="py-2 pl-6 border" to="/contact">CONTACT</NavLink>
+          <NavLink className="py-2 pl-6 border-0" to="/">HOME</NavLink>
+          <NavLink className="py-2 pl-6 border-0" to="/collection">COLLECTION</NavLink>
+          <NavLink className="py-2 pl-6 border-0" to="/about">ABOUT</NavLink>
+          <NavLink className="py-2 pl-6 border-0" to="/contact">CONTACT</NavLink>
         </div>
       </div>
     </div>
