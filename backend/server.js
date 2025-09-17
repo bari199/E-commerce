@@ -6,10 +6,11 @@ import { connect } from 'mongoose'
 import connectCloudinary from './config/cloudinary.js'
 import userRouter from './routes/userRoute.js'
 import productRouter from './routes/productRoute.js'
+import cartRouter from './routes/cartRoute.js'
 
 //App Config
 const app = express() 
-const port = process.env.PORT|| 4000
+const port = process.env.PORT|| 7000
 connectDB()
 connectCloudinary()
 
@@ -22,6 +23,7 @@ app.use(cors())
 //api emdpoints
 app.use('/api/user',userRouter)
 app.use('/api/product',productRouter)
+app.use('/api/cart',cartRouter)
 
 
 

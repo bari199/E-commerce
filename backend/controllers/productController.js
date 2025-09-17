@@ -50,7 +50,7 @@ const addProduct = async (req, res) => {
     const product = new productModel(productData);
     await product.save();
 
-    res.json({ success: true, message: "Product Added" });
+   res.json({ success: true, message: "Product Added" });
 
     console.log(
       name,
@@ -63,13 +63,13 @@ const addProduct = async (req, res) => {
     );
     console.log(imagesUrl);
 
-    res.json({});
+   
   } catch (error) {
-    res.json({ success: false, message: error.message });
+  res.json({ success: false, message: error.message });
   }
 };
 
-// function for removing product
+// function for list product
 const listProduct = async (req, res) => {
   try {
     const products = await productModel.find({});
