@@ -5,12 +5,14 @@ import {Routes, Route} from 'react-router-dom'
 import Login from './components/Login'
 import Add from './pages/Add'
 import List from './pages/List'
+import Order from './pages/Order'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL
+export const currency = '₹'
 
 const App = () => {
 
@@ -32,7 +34,7 @@ const App = () => {
           <Routes>
             <Route path='/add' element={<Add token={token} />} />
             <Route path='/list' element={<List token={token} />} />
-            <Route path='/add' element={<Add token={token} />} />
+            <Route path='/order' element={<Order token={token} />} />
           </Routes>
         </div>
       </div>
