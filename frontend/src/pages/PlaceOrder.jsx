@@ -1,11 +1,10 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
@@ -16,20 +15,20 @@ const PlaceOrder = () => {
     cartItems,
     setCartItems,
     getCartAmount,
-    delivery_fee,
+    delivary_fee,
     products,
   } = useContext(ShopContext);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    street: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    country: '',
-    phone: '',
-  })
+    firstName: "",
+    lastName: "",
+    email: "",
+    street: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    country: "",
+    phone: "",
+  });
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -40,48 +39,63 @@ const PlaceOrder = () => {
     event.preventDefault();
     try {
       let orderItems = [];
-     for (const productId in cartItems) {
-      for (const size in cartItems[productId]) {
-        if (cartItems[productId][size] > 0) {
-          const itemInfo = structuredClone(
-            products.find((product) => product._id === productId)
-          );
+      for (const productId in cartItems) {
+        for (const size in cartItems[productId]) {
+          if (cartItems[productId][size] > 0) {
+            const itemInfo = structuredClone(
+              products.find((product) => product._id === productId)
+            );
 
-          if (itemInfo) {
-            itemInfo.size = size;
-            itemInfo.quantity = cartItems[productId][size];
-            orderItems.push(itemInfo);
+            if (itemInfo) {
+              itemInfo.size = size;
+              itemInfo.quantity = cartItems[productId][size];
+              orderItems.push(itemInfo);
+            }
           }
         }
       }
-    }
-      
 
-    let orderData = {
-      address:formData,
-      items:orderItems,
-      amount:getCartAmount() + delivery_fee
-    }
+      let orderData = {
+        address: formData,
+        items: orderItems,
+        amount: getCartAmount() + delivary_fee,
+      };
 
-    switch (method){
-      //API Calls for COD
-      case 'cod': 
-      const response = await axios.post(backendUrl+'/api/order/place',orderData,{headers:{token}})
-      console.log(response.data.success);
-      if(response.data.success){
-        setCartItems({})
-        navigate('/orders')
-      }else{
-        toast.error(response.data.message)
+      switch (method) {
+        //API Calls for COD
+        case "cod":
+          const response = await axios.post(
+            backendUrl + "/api/order/place",
+            orderData,
+            { headers: { token } }
+          );
+          console.log(response.data.success);
+          if (response.data.success) {
+            setCartItems({});
+            navigate("/orders");
+          } else {
+            toast.error(response.data.message);
+          }
+          break;
+
+        case "stripe":
+          const responseStripe = await axios.post(
+            backendUrl + "/api/order/stripe",
+            orderData,
+            { headers: { token } }
+          );
+          if (responseStripe.data.success) {
+            const { session_url } = responseStripe.data;
+            window.location.replace(session_url);
+          } else {
+            toast.error(responseStripe.data.message);
+          }
+
+          break;
+
+        default:
+          break;
       }
-      break;
-
-
-      default:
-        break; 
-
-    }
-
     } catch (error) {}
   };
 
@@ -98,7 +112,7 @@ const PlaceOrder = () => {
         <div className="flex gap-3 ">
           <input
             onChange={onChangeHandler}
-            name='firstName'
+            name="firstName"
             value={formData.firstName}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
@@ -106,7 +120,7 @@ const PlaceOrder = () => {
           />
           <input
             onChange={onChangeHandler}
-            name='lastName'
+            name="lastName"
             value={formData.lastName}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
@@ -115,7 +129,7 @@ const PlaceOrder = () => {
         </div>
         <input
           onChange={onChangeHandler}
-          name='email'
+          name="email"
           value={formData.email}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="email"
@@ -124,7 +138,7 @@ const PlaceOrder = () => {
         <input
           required
           onChange={onChangeHandler}
-          name='street'
+          name="street"
           value={formData.street}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="text"
@@ -134,7 +148,7 @@ const PlaceOrder = () => {
           <input
             required
             onChange={onChangeHandler}
-            name='city'
+            name="city"
             value={formData.city}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
@@ -143,7 +157,7 @@ const PlaceOrder = () => {
           <input
             required
             onChange={onChangeHandler}
-            name='state'
+            name="state"
             value={formData.state}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
@@ -154,7 +168,7 @@ const PlaceOrder = () => {
           <input
             required
             onChange={onChangeHandler}
-            name='zipcode'
+            name="zipcode"
             value={formData.zipcode}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="number"
@@ -163,7 +177,7 @@ const PlaceOrder = () => {
           <input
             required
             onChange={onChangeHandler}
-            name='country'
+            name="country"
             value={formData.country}
             className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
@@ -173,7 +187,7 @@ const PlaceOrder = () => {
         <input
           required
           onChange={onChangeHandler}
-          name='phone'
+          name="phone"
           value={formData.phone}
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="number"
